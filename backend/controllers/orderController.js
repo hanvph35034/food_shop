@@ -7,7 +7,7 @@ const placingOrder = async (req, res) => {
   try {
     const fronend_url = 'http://localhost:5173'; 
     const newOrder = new orderModel({
-      userId: req.body.Id,
+      userId: req.body.userId,
       items: req.body.items,
       amount: req.body.amount,
       address: req.body.address,
@@ -43,4 +43,15 @@ const placingOrder = async (req, res) => {
     res.json({success:false,message:error.message});
   }
 };
-export { placingOrder };
+// user order of frontend
+const userOrder = async (req, res) => {
+try {
+  const orders = await orderModel.find({userId:req.body.userId});
+  res.json({success: true,data:orders});
+} catch (error) {
+  console.log(error)
+  res.json({success: false,message:"Error"});
+}
+}
+export { placingOrder ,userOrder};
+
